@@ -42,6 +42,16 @@ function styleSocialSignInPage() {
     }
 }
 
+function styleErrorElement(element) {
+    if (element) {
+        element.classList.add('message', 'is-danger')
+        const messageBody = element.querySelector('p')
+        if (messageBody) {
+            messageBody.classList.add('message-body')
+        }
+    }
+}
+
 function styleLocalSignInPage() {
     const localSignInDiv = document.querySelector('#LocalSignUpAndSignIn #api[data-name="Unified"]')
     if (localSignInDiv) {
@@ -55,14 +65,10 @@ function styleLocalSignInPage() {
             }
         })
 
-        const errorDiv = localSignInDiv.querySelector('.error')
-        if (errorDiv) {
-            errorDiv.classList.add('message', 'is-danger')
-            const messageBody = errorDiv.querySelector('p')
-            if (messageBody) {
-                messageBody.classList.add('message-body')
-            }
-        }
+        const errorDivs = localSignInDiv.querySelectorAll('.error')
+        errorDivs.forEach(errorDiv => {
+            styleErrorElement(errorDiv)
+        })
 
         form.querySelector('label[for=signInName]').classList.add('is-hidden')
         form.querySelector('#signInName').classList.add('input', 'my-2')
