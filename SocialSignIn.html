@@ -6,18 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eello | Sign in with External Account</title>
     <link rel="stylesheet" data-preload="true" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma-rtl.min.css" />
-    <link rel="stylesheet" data-preload="true" href="https://swanav.github.io/eello-adb2c-ui/styles.css"/>
+    <link rel="stylesheet" data-preload="true" href="styles.css"/>
+    <!-- <link rel="stylesheet" data-preload="true" href="https://swanav.github.io/eello-adb2c-ui/styles.css"/> -->
+    <script src="main.js"></script>
 </head>
 <body>
-    <section class="hero is-large is-warning">
+    <section class="hero is-medium is-warning">
         <div class="hero-body">
-            <p class="title">Sign In to eello</p>
+            <p class="title">Sign in to eello</p>
             <p class="subtitle">with a third-party account provider</p>
         </div>
     </section>
     <section class="section">
-        <div id="api">
-            
+        <div id="api" data-name="Unified">
+            <div class="heading">
+              <h1 role="heading">Sign in</h1>
+            </div>
+              <div class="claims-provider-list-buttons social" aria-label="Sign in with your social account" role="form">
+                <div class="intro">
+                  <h2 aria-level="1">Sign in with your social account</h2>
+                </div>
+                <div class="options">
+                    <div>
+                        <button class="accountButton firstButton claims-provider-selection" id="GoogleExchange" role="link" autofocus="">Google</button>
+                    </div>
+                    <div>
+                        <button class="accountButton claims-provider-selection" id="AmazonExchange" role="link">Amazon</button>
+                    </div>
+                    <div>
+                        <button class="accountButton claims-provider-selection" id="AppleExchange" role="link">Sign in with Apple</button>
+                    </div>
+                    <div>
+                        <button class="accountButton claims-provider-selection" id="FacebookExchange" role="link">Facebook</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <footer class="footer">
