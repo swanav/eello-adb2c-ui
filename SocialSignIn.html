@@ -17,7 +17,7 @@
             display: none;
         }
     </style>
-    
+
     <script>
         function modifyPage() {
             console.log('page loaded. starting...')
@@ -67,6 +67,10 @@
             console.log('modified button', button.id)
         }
 
+        $(window).on('pageshow', function() {
+            modifyPage();
+        });
+
         window.addEventListener('load', function (){
             modifyPage();
         })
@@ -113,5 +117,11 @@
             </p>
         </div>
     </footer>
+    <script>
+        $( document ).ready(function() {
+            console.log( "ready!" );
+            modifyPage();
+        });
+    </script>
 </body>
 </html>
