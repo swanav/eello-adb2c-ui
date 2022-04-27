@@ -99,10 +99,22 @@ function styleLocalSignInPage() {
 
 
 function stylePages() {
+    console.log('Styling pages')
     styleSocialSignInPage();
     styleLocalSignInPage();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    stylePages();
-});
+// if (window.jQuery) {
+//     $(document).ready(() => {
+//         console.log('Ready')
+//         stylePages();
+//     })
+// } else {
+//     document.addEventListener("DOMContentLoaded", () => {
+//         console.log('DOMContentLoaded')
+//         stylePages();
+//     });
+// }
+
+console.log('Deferred')
+stylePages();
