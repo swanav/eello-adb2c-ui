@@ -55,6 +55,15 @@ function styleLocalSignInPage() {
             }
         })
 
+        const errorDiv = localSignInDiv.querySelector('.error')
+        if (errorDiv) {
+            errorDiv.classList.add('message', 'is-danger')
+            const messageBody = errorDiv.querySelector('p')
+            if (messageBody) {
+                messageBody.classList.add('message-body')
+            }
+        }
+
         form.querySelector('label[for=signInName]').classList.add('is-hidden')
         form.querySelector('#signInName').classList.add('input', 'my-2')
         form.querySelector('label[for=password]').classList.add('is-hidden')
