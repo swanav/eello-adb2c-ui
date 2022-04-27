@@ -17,7 +17,7 @@ function modifyActionButton(button, icon, text) {
 }
 
 function stylePage() {
-    const unifiedSelectorDiv = document.querySelector('#api[data-name="Unified"]')
+    const unifiedSelectorDiv = document.querySelector('#SocialSignIn #api[data-name="Unified"]')
     if (unifiedSelectorDiv) {
         unifiedSelectorDiv.classList.add('card', 'p-5')
         unifiedSelectorDiv.querySelector('.claims-provider-list-buttons > .options')
