@@ -8,3 +8,7 @@ html, body {
 #api > .heading, .claims-provider-list-buttons > .intro {
     display: none;
 }
+
+#rememberMe {
+    padding: 30px;
+}

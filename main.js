@@ -16,45 +16,6 @@ function modifyActionButton(button, icon, text) {
     button.replaceChildren(iconSpan, textSpan)
 }
 
-function styleLocalSignInPage() {
-    const localSignInDiv = document.querySelector('#LocalSignUpAndSignIn #api[data-name="Unified"]')
-    if (localSignInDiv) {
-        localSignInDiv.classList.add('card', 'p-5')
-        localSignInDiv.querySelector('.intro').remove();
-        const form = localSignInDiv.querySelector('form')
-        form.classList.add('is-flex', 'is-flex-direction-column')
-        form.childNodes.forEach((e) => {
-            if (e.nodeType === Node.ELEMENT_NODE) {
-                e.classList.add('is-flex-grow-1', 'm-2', 'p-2')
-            }
-        })
-
-        form.querySelectorAll('label').forEach(e => {
-            e.classList.add('is-hidden')
-        })
-
-        form.querySelectorAll('input').forEach(e => {
-            e.classList.add('input', 'mb-2')
-        })
-        
-        form.querySelector('#forgotPassword').classList.add('is-pulled-right', 'button', 'is-inverted', 'is-rounded', 'is-small', 'is-danger', 'mt-4', 'mb-4')
-
-        form.querySelectorAll('button').forEach(e => {
-            e.classList.add('button', 'is-flex-grow-1', 'is-primary', 'mt-5')
-        })
-
-        form.querySelector('.divider').classList.add('has-text-centered');
-
-
-
-        const createAccountSelector = form.querySelector('.create')
-        createAccountSelector.children[0].classList.add('is-flex', 'px-6', 'mx-6', 'is-align-content-center')
-        createAccountSelector.querySelector('a').classList.add('ml-3', 'is-align-content-center')
-
-        console.log(localSignInDiv)
-    }
-}
-
 function styleSocialSignInPage() {
     const unifiedSelectorDiv = document.querySelector('#SocialSignIn #api[data-name="Unified"]')
     if (unifiedSelectorDiv) {
@@ -81,11 +42,67 @@ function styleSocialSignInPage() {
     }
 }
 
-function stylePage() {
+function styleLocalSignInPage() {
+    const localSignInDiv = document.querySelector('#LocalSignUpAndSignIn #api[data-name="Unified"]')
+    if (localSignInDiv) {
+        localSignInDiv.classList.add('card', 'p-5')
+        localSignInDiv.querySelector('.intro').remove();
+        const form = localSignInDiv.querySelector('form')
+        form.classList.add('is-flex', 'is-flex-direction-column')
+        form.childNodes.forEach((e) => {
+            if (e.nodeType === Node.ELEMENT_NODE) {
+                e.classList.add('is-flex-grow-1', 'm-2', 'p-2')
+            }
+        })
+
+        form.querySelector('label[for=signInName]').classList.add('is-hidden')
+        form.querySelector('#signInName').classList.add('input', 'my-2')
+        form.querySelector('label[for=password]').classList.add('is-hidden')
+        form.querySelector('#forgotPassword').classList.add('is-pulled-right', 'button', 'is-inverted', 'is-rounded', 'is-small', 'is-danger', 'my-4')
+        form.querySelector('#password').classList.add('input', 'my-2')
+        form.querySelector('.rememberMe').classList.add('my-4')
+        form.querySelector('#rememberMe').classList.add('mr-2')
+        form.querySelector('label[for=rememberMe]').classList.add('mx-2', 'has-text-danger')
+
+        form.querySelectorAll('button').forEach(e => {
+            e.classList.add('button', 'is-flex-grow-1', 'is-primary', 'my-5')
+        })
+
+        form.querySelector('.divider').classList.add('has-text-centered');
+
+        const createAccountSelector = form.querySelector('.create')
+        if (createAccountSelector) {
+            const createAccountPrompt = createAccountSelector.children[0]
+            if (createAccountPrompt) {
+                let layoutClass = document.body.clientWidth > 640 ? 'is-flex-direction-row' : 'is-flex-direction-column'
+                createAccountPrompt.classList.add('is-flex', layoutClass, 'is-justify-content-center')
+
+                const signUpLink = createAccountPrompt.childNodes[1]
+
+                const promptDiv = document.createElement('div')
+                promptDiv.classList.add('mx-2', 'has-text-centered')
+                promptDiv.innerText = "Don't have an account?"
+
+
+                createAccountPrompt.innerHTML = ''
+                createAccountPrompt.appendChild(promptDiv)
+                if (signUpLink) {
+                    createAccountPrompt.appendChild(signUpLink)
+                    signUpLink.classList.add('has-text-centered', 'has-text-primary')
+                }
+            }
+    
+    
+        }
+    }
+}
+
+
+function stylePages() {
     styleSocialSignInPage();
     styleLocalSignInPage();
 }
 
-$(document).ready(function() {
-    stylePage();
+document.addEventListener("DOMContentLoaded", () => {
+    stylePages();
 });
