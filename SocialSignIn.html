@@ -19,7 +19,7 @@
     </style>
     
     <script>
-        window.onload = () => {
+        function modifyPage() {
             console.log('page loaded. starting...')
             const unifiedSelectorDiv = document.querySelector('#api[data-name="Unified"]')
             if (unifiedSelectorDiv) {
@@ -66,6 +66,11 @@
             button.replaceChildren(iconSpan, textSpan)
             console.log('modified button', button.id)
         }
+
+        window.addEventListener('load', function (){
+            modifyPage();
+        })
+
     </script>
 </head>
 <body>
