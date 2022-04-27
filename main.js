@@ -53,7 +53,7 @@ function styleErrorElement(element) {
 }
 
 function styleLocalSignInPage() {
-    const localSignInDiv = document.querySelector('#LocalSignUpAndSignIn #api[data-name="Unified"]')
+    const localSignInDiv = document.querySelector('#LocalSignIn #api[data-name="Unified"]')
     if (localSignInDiv) {
         localSignInDiv.classList.add('card', 'p-5')
         localSignInDiv.querySelector('.intro').remove();
@@ -112,11 +112,23 @@ function styleLocalSignInPage() {
     }
 }
 
+function styleLocalSignUpPage() {
+    const localSignInDiv = document.querySelector('#LocalSignUp #api[data-name="Unified"]')
+    if (localSignInDiv) {
+        localSignInDiv.classList.add('card', 'p-5')
+        localSignInDiv.querySelector('.intro').remove();
+        const form = localSignInDiv.querySelector('form')
+        form.querySelectorAll('input').forEach(e => e.classList.add('input'))
+        form.querySelectorAll('button').forEach(e => e.classList.add('button', 'is-primary'))
+    }
+}
+
 
 function stylePages() {
     console.log('Styling pages')
     styleSocialSignInPage();
     styleLocalSignInPage();
+    styleLocalSignUpPage();
 }
 
 // if (window.jQuery) {
@@ -131,5 +143,4 @@ function stylePages() {
 //     });
 // }
 
-console.log('Deferred')
 stylePages();
