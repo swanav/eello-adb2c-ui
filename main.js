@@ -40,8 +40,10 @@ function styleSocialSignInPage() {
         const facebookAccountButton = unifiedSelectorDiv.querySelector('.accountButton#FacebookExchange')
         modifyActionButton(facebookAccountButton, 'fab fa-facebook-f', 'Facebook')
     }
+}
 
-    const localSignInDiv = document.querySelector('#localAccountForm.localAccount')
+function styleLinkSocialLoginPage() {
+    const localSignInDiv = document.querySelector('#LinkSocialLogins #localAccountForm')
     console.log(localSignInDiv)
     if (localSignInDiv) {
         localSignInDiv.classList.add('card', 'p-5')
@@ -98,6 +100,29 @@ function styleSocialSignInPage() {
     
     
         }
+    }
+    const unifiedSelectorDiv = document.querySelector('#LinkSocialLogins #api[data-name="Unified"]')
+    if (unifiedSelectorDiv) {
+        unifiedSelectorDiv.classList.add('card', 'p-5')
+        unifiedSelectorDiv.querySelector('.claims-provider-list-buttons > .options')
+            .childNodes
+            .forEach((e) => {
+                if (e.nodeType === Node.ELEMENT_NODE) {
+                    e.classList.add('is-flex', 'mb-2', 'px-6', 'mx-7')
+                }
+            })
+
+        const googleAccountButton = unifiedSelectorDiv.querySelector('.accountButton#GoogleExchange')
+        modifyActionButton(googleAccountButton, 'fab fa-google', 'Sign in with Google')
+
+        const amazonAccountButton = unifiedSelectorDiv.querySelector('.accountButton#AmazonExchange')
+        modifyActionButton(amazonAccountButton, 'fab fa-amazon', 'Login with Amazon')
+
+        const appleAccountButton = unifiedSelectorDiv.querySelector('.accountButton#AppleExchange')
+        modifyActionButton(appleAccountButton, 'fab fa-apple', 'Sign in with Apple')
+
+        const facebookAccountButton = unifiedSelectorDiv.querySelector('.accountButton#FacebookExchange')
+        modifyActionButton(facebookAccountButton, 'fab fa-facebook-f', 'Facebook')
     }
 }
 
@@ -210,6 +235,7 @@ function stylePages() {
     styleSocialSignInPage();
     styleLocalSignInPage();
     styleLocalSignUpPage();
+    styleLinkSocialLoginPage();
     showPage();
 }
 
