@@ -48,6 +48,12 @@ function styleErrorElement(element) {
         const messageBody = element.querySelector('p')
         if (messageBody) {
             messageBody.classList.add('message-body')
+        } else {
+            const errorMessage = element.innerText
+            const messageBody = document.createElement('p')
+            messageBody.classList.add('message-body')
+            messageBody.innerText = errorMessage
+            element.innerHTML = messageBody.outerHTML
         }
     }
 }
@@ -113,34 +119,49 @@ function styleLocalSignInPage() {
 }
 
 function styleLocalSignUpPage() {
-    const localSignInDiv = document.querySelector('#LocalSignUp #api[data-name="Unified"]')
-    if (localSignInDiv) {
-        localSignInDiv.classList.add('card', 'p-5')
-        localSignInDiv.querySelector('.intro').remove();
-        const form = localSignInDiv.querySelector('form')
-        form.querySelectorAll('input').forEach(e => e.classList.add('input'))
-        form.querySelectorAll('button').forEach(e => e.classList.add('button', 'is-primary'))
+    const localSignUpDiv = document.querySelector('#LocalSignUp #api[data-name="Unified"]')
+    if (localSignUpDiv) {
+        localSignUpDiv.classList.add('card', 'p-5')
+        localSignUpDiv.querySelector('.intro').remove();
+
+        const errorDivs = localSignUpDiv.querySelectorAll('#attributeVerification > .error.pageLevel')
+        errorDivs.forEach(errorDiv => {
+            styleErrorElement(errorDiv)
+        })
+
+
+        const form = localSignUpDiv.querySelector('form')
+        if (form) {
+            form.querySelectorAll('input').forEach(e => e.classList.add('input'))
+            form.querySelectorAll('button').forEach(e => e.classList.add('button', 'is-primary'))
+
+            form.querySelector('.buttons').classList.add('columns')
+            form.querySelectorAll('button').forEach(e => {
+                e.classList.add('column', 'm-5', 'p-3')
+            })
+        }
     }
 }
 
+function showPage() {
+    document.querySelector('body').classList.remove('is-invisible')
+}
 
 function stylePages() {
-    console.log('Styling pages')
     styleSocialSignInPage();
     styleLocalSignInPage();
     styleLocalSignUpPage();
+    showPage();
 }
 
-// if (window.jQuery) {
-//     $(document).ready(() => {
-//         console.log('Ready')
-//         stylePages();
-//     })
-// } else {
-//     document.addEventListener("DOMContentLoaded", () => {
-//         console.log('DOMContentLoaded')
-//         stylePages();
-//     });
-// }
-
-stylePages();
+if (document.readyState === 'loading') {
+    if (window.jQuery !== undefined) {
+        $(() => {stylePages();});
+    } else {
+        document.addEventListener("DOMContentLoaded", () => {
+            stylePages();
+        });
+    }
+} else {
+    stylePages();
+}
