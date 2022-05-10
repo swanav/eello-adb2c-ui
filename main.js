@@ -4,6 +4,7 @@ function modifyActionButton(button, icon, text) {
     }
 
     button.classList.add('button', 'is-flex-grow-1')
+    button.classList.add('btn', 'btn-dark')
 
     const iconSpan = document.createElement('span')
     iconSpan.classList.add('icon', 'mx-1')
@@ -61,9 +62,9 @@ function styleLinkSocialLoginPage() {
             styleErrorElement(errorDiv)
         })
 
-        form.querySelector('label[for=signInName]').classList.add('is-hidden')
+        form.querySelector('label[for=signInName]').classList.add('d-none')
         form.querySelector('#signInName').classList.add('input', 'my-2')
-        form.querySelector('label[for=password]').classList.add('is-hidden')
+        form.querySelector('label[for=password]').classList.add('d-none')
         form.querySelector('#forgotPassword').classList.add('is-pulled-right', 'button', 'is-inverted', 'is-rounded', 'is-small', 'is-danger', 'my-4')
         form.querySelector('#password').classList.add('input', 'my-2')
         form.querySelector('.rememberMe').classList.add('my-4')
@@ -97,8 +98,8 @@ function styleLinkSocialLoginPage() {
                     signUpLink.classList.add('has-text-centered', 'has-text-primary')
                 }
             }
-    
-    
+
+
         }
     }
     const unifiedSelectorDiv = document.querySelector('#LinkSocialLogins #api[data-name="Unified"]')
@@ -127,17 +128,20 @@ function styleLinkSocialLoginPage() {
 }
 
 function styleErrorElement(element) {
+
+    const messageElement = (message) => {
+        const body = document.createElement('div')
+        body.classList.add('message-body')
+        body.innerText = message
+        return body
+    }
+
     if (element) {
-        element.classList.add('message', 'is-danger')
-        const messageBody = element.querySelector('p')
-        if (messageBody) {
-            messageBody.classList.add('message-body')
-        } else {
+        element.classList.add('alert', 'alert-danger', 'align-items-center')
+        const messageBody = element.querySelector('div')
+        if (!messageBody) {
             const errorMessage = element.innerText
-            const messageBody = document.createElement('p')
-            messageBody.classList.add('message-body')
-            messageBody.innerText = errorMessage
-            element.innerHTML = messageBody.outerHTML
+            element.replaceChildren(messageElement(errorMessage))
         }
     }
 }
@@ -151,7 +155,7 @@ function styleLocalSignInPage() {
         form.classList.add('is-flex', 'is-flex-direction-column')
         form.childNodes.forEach((e) => {
             if (e.nodeType === Node.ELEMENT_NODE) {
-                e.classList.add('is-flex-grow-1', 'm-2', 'p-2')
+                e.classList.add('m-2')
             }
         })
 
@@ -160,18 +164,20 @@ function styleLocalSignInPage() {
             styleErrorElement(errorDiv)
         })
 
-        form.querySelector('label[for=signInName]').classList.add('is-hidden')
-        form.querySelector('#signInName').classList.add('input', 'my-2')
-        form.querySelector('label[for=password]').classList.add('is-hidden')
-        form.querySelector('#forgotPassword').classList.add('is-pulled-right', 'button', 'is-inverted', 'is-rounded', 'is-small', 'is-danger', 'my-4')
-        form.querySelector('#password').classList.add('input', 'my-2')
-        form.querySelector('.rememberMe').classList.add('my-4')
-        form.querySelector('#rememberMe').classList.add('mr-2')
-        form.querySelector('label[for=rememberMe]').classList.add('mx-2', 'has-text-danger')
+        setupPwdTogglers();
 
-        form.querySelectorAll('button').forEach(e => {
-            e.classList.add('button', 'is-flex-grow-1', 'is-primary', 'my-5')
-        })
+        form.querySelector('label[for=signInName]').classList.add('d-none')
+        form.querySelector('#signInName').classList.add('form-control', 'my-2')
+
+        form.querySelector('label[for=password]').classList.add('d-none')
+        form.querySelector('#password').classList.add('form-control', 'my-2')
+        form.querySelector('#forgotPassword').classList.add('float-right', 'btn', 'btn-outline-info', 'my-4')
+
+        form.querySelector('.rememberMe').classList.add('form-check', 'form-switch', 'my-4')
+        form.querySelector('label[for=rememberMe]').classList.add('form-check-label', 'mx-2', 'has-text-danger')
+        form.querySelector('#rememberMe').classList.add('form-check-input', 'mr-2')
+
+        form.querySelector('#next').classList.add('btn', 'btn-dark', 'my-5')
 
         form.querySelector('.divider').classList.add('has-text-centered');
 
@@ -179,13 +185,14 @@ function styleLocalSignInPage() {
         if (createAccountSelector) {
             const createAccountPrompt = createAccountSelector.children[0]
             if (createAccountPrompt) {
-                let layoutClass = document.body.clientWidth > 640 ? 'is-flex-direction-row' : 'is-flex-direction-column'
-                createAccountPrompt.classList.add('is-flex', layoutClass, 'is-justify-content-center')
+                // let layoutClass = document.body.clientWidth > 640 ? 'is-flex-direction-row' : 'is-flex-direction-column'
+                // createAccountPrompt.classList.add('is-flex', layoutClass, 'is-justify-content-center')
 
                 const signUpLink = createAccountPrompt.childNodes[1]
 
                 const promptDiv = document.createElement('div')
-                promptDiv.classList.add('mx-2', 'has-text-centered')
+                promptDiv.id = "create-msg-div"
+                // promptDiv.classList.add('mx-2')
                 promptDiv.innerText = "Don't have an account?"
 
 
@@ -193,11 +200,10 @@ function styleLocalSignInPage() {
                 createAccountPrompt.appendChild(promptDiv)
                 if (signUpLink) {
                     createAccountPrompt.appendChild(signUpLink)
-                    signUpLink.classList.add('has-text-centered', 'has-text-primary')
+                    signUpLink.id = "create-link-a"
+                    signUpLink.classList.add('btn', 'btn-outline-success')
                 }
             }
-    
-    
         }
     }
 }
@@ -227,6 +233,39 @@ function styleLocalSignUpPage() {
     }
 }
 
+function makePwdToggler(pwd) {
+    const  div = document.createElement('div');
+    div.classList.add('form-check', 'form-switch', 'my-4')
+
+    const  checkbox = document.createElement('input');
+    checkbox.setAttribute('type', 'checkbox');
+    const  id = pwd.id + 'toggler';
+    checkbox.setAttribute('id', id);
+    checkbox.classList.add('form-check-input', 'mr-2')
+    div.appendChild(checkbox);
+    
+    const label = document.createElement('label');
+    label.setAttribute('for', id);
+    label.appendChild(document.createTextNode('Show Password'));
+    label.classList.add('form-check-label', 'mx-2')
+    div.appendChild(label);    
+
+    pwd.insertAdjacentElement('afterend', div);
+
+    const toggle = () => {
+        pwd.type = pwd.type === 'password' ? 'text' : 'password';
+    }
+    checkbox.addEventListener('click', toggle)
+    checkbox.addEventListener('keydown', toggle)
+}
+
+function setupPwdTogglers() {
+    var pwdInputs = document.querySelectorAll('input[type=password]');
+    for (var i = 0; i < pwdInputs.length; i++) {
+        makePwdToggler(pwdInputs[i]);
+    }
+}
+
 function showPage() {
     document.querySelector('body').classList.remove('is-invisible')
 }
@@ -241,7 +280,7 @@ function stylePages() {
 
 if (document.readyState === 'loading') {
     if (window.jQuery !== undefined) {
-        $(() => {stylePages();});
+        $(() => { stylePages(); });
     } else {
         document.addEventListener("DOMContentLoaded", () => {
             stylePages();
