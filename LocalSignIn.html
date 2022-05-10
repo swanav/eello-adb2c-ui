@@ -10,7 +10,7 @@
     <!-- <link rel="stylesheet" data-preload="true" href="styles.css" /> -->
 </head>
 
-<body class="is-flex is-flex-direction-column is-justify-content-space-between is-invisible">
+<body class="d-none">
     <section class="hero">
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
@@ -84,13 +84,146 @@
     </main>
     <footer class="footer">
         <div class="container">
-            <span class="text-muted">
+            <span class="text-muted" id="copyright-text">
                 &copy; <strong>eello</strong> 2022. All rights reserved.
             </span>
         </div>
     </footer>
-    <script src="https://swanav.github.io/eello-adb2c-ui/main.js" defer></script>
-    <!-- <script src="main.js"></script> -->
+    <script>
+        function makeCopyrightText() {
+            const year = new Date().getFullYear();
+            const copyrightText = document.getElementById("copyright-text");
+            if (copyrightText) {
+                copyrightText.innerHTML = `&copy; <strong>eello</strong> ${year}. All rights reserved.`
+            }
+        }
+
+        function makePwdToggler(pwd) {
+            const div = document.createElement('div');
+            div.classList.add('form-check', 'form-switch', 'my-4')
+
+            const checkbox = document.createElement('input');
+            checkbox.setAttribute('type', 'checkbox');
+            const id = pwd.id + 'toggler';
+            checkbox.setAttribute('id', id);
+            checkbox.classList.add('form-check-input', 'mr-2')
+            div.appendChild(checkbox);
+
+            const label = document.createElement('label');
+            label.setAttribute('for', id);
+            label.appendChild(document.createTextNode('Show Password'));
+            label.classList.add('form-check-label', 'mx-2')
+            div.appendChild(label);
+
+            pwd.insertAdjacentElement('afterend', div);
+
+            const toggle = () => {
+                pwd.type = pwd.type === 'password' ? 'text' : 'password';
+            }
+            checkbox.addEventListener('click', toggle)
+            checkbox.addEventListener('keydown', toggle)
+        }
+
+        function setupPwdTogglers() {
+            var pwdInputs = document.querySelectorAll('input[type=password]');
+            for (var i = 0; i < pwdInputs.length; i++) {
+                makePwdToggler(pwdInputs[i]);
+            }
+        }
+
+        function styleErrorElement(element) {
+
+            const messageElement = (message) => {
+                const body = document.createElement('div')
+                body.classList.add('message-body')
+                body.innerText = message
+                return body
+            }
+
+            if (element) {
+                element.classList.add('alert', 'alert-danger')
+                const messageBody = element.querySelector('div')
+                if (!messageBody) {
+                    const errorMessage = element.innerText
+                    element.replaceChildren(messageElement(errorMessage))
+                }
+            }
+        }
+
+        function stylePage() {
+            const localSignInDiv = document.querySelector('#LocalSignIn #api[data-name="Unified"]')
+            if (localSignInDiv) {
+                localSignInDiv.classList.add('card', 'p-5')
+                localSignInDiv.querySelector('.intro').remove();
+                const form = localSignInDiv.querySelector('form')
+                form.classList.add('is-flex', 'is-flex-direction-column')
+                form.childNodes.forEach((e) => {
+                    if (e.nodeType === Node.ELEMENT_NODE) {
+                        e.classList.add('m-2')
+                    }
+                })
+
+                const errorDivs = localSignInDiv.querySelectorAll('.error')
+                errorDivs.forEach(errorDiv => {
+                    styleErrorElement(errorDiv)
+                })
+
+                setupPwdTogglers();
+
+                form.querySelector('#signInName').classList.add('form-control', 'my-2')
+
+                form.querySelector('#password').classList.add('form-control', 'my-2')
+                form.querySelector('#forgotPassword').classList.add('btn', 'btn-outline-danger', 'my-4')
+
+                form.querySelector('.rememberMe').classList.add('form-check', 'form-switch', 'my-4')
+                form.querySelector('label[for=rememberMe]').classList.add('form-check-label', 'mx-2', 'has-text-danger')
+                form.querySelector('#rememberMe').classList.add('form-check-input', 'mr-2')
+
+                form.querySelector('#next').classList.add('btn', 'btn-dark', 'my-5')
+
+                const createAccountSelector = form.querySelector('.create')
+                if (createAccountSelector) {
+                    const createAccountPrompt = createAccountSelector.children[0]
+                    if (createAccountPrompt) {
+                        const signUpLink = createAccountPrompt.childNodes[1]
+                        const promptDiv = document.createElement('div')
+                        promptDiv.id = "create-msg-div"
+                        promptDiv.innerText = "Don't have an account?"
+                        createAccountPrompt.innerText = ''
+                        createAccountPrompt.appendChild(promptDiv)
+                        if (signUpLink) {
+                            createAccountPrompt.appendChild(signUpLink)
+                            signUpLink.id = "create-link-a"
+                            signUpLink.classList.add('btn', 'btn-outline-success')
+                        }
+                    }
+                }
+            }
+            makeCopyrightText()
+        }
+
+        function showPage() {
+            document.querySelector('body').classList.remove('d-none')
+        }
+
+        function stylePageAndShow() {
+            stylePage();
+            showPage();
+        }
+
+        if (document.readyState === 'loading') {
+            if (window.jQuery !== undefined) {
+                $(() => { stylePageAndShow(); });
+            } else {
+                document.addEventListener("DOMContentLoaded", () => {
+                    stylePageAndShow();
+                });
+            }
+        } else {
+            stylePageAndShow();
+        }
+
+    </script>
 </body>
 
 </html>

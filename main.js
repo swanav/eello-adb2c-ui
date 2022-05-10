@@ -171,7 +171,7 @@ function styleLocalSignInPage() {
 
         form.querySelector('label[for=password]').classList.add('d-none')
         form.querySelector('#password').classList.add('form-control', 'my-2')
-        form.querySelector('#forgotPassword').classList.add('float-right', 'btn', 'btn-outline-info', 'my-4')
+        form.querySelector('#forgotPassword').classList.add('btn', 'btn-outline-danger', 'my-4')
 
         form.querySelector('.rememberMe').classList.add('form-check', 'form-switch', 'my-4')
         form.querySelector('label[for=rememberMe]').classList.add('form-check-label', 'mx-2', 'has-text-danger')

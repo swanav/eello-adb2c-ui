@@ -24,6 +24,12 @@ html, body {
     font-weight: 600;
     line-height: 1.125;
 }
+ 
+label[for='password'],
+label[for='signInName'] {
+    display: none;
+    background-color: #f43323;
+}
 
 .buttons {
     display: flex;
@@ -56,6 +62,12 @@ html, body {
 footer {
     padding: 2rem;
     text-align: center;
+}
+
+.password-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 @media (max-width: 768px) {
