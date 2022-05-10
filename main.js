@@ -166,10 +166,8 @@ function styleLocalSignInPage() {
 
         setupPwdTogglers();
 
-        form.querySelector('label[for=signInName]').classList.add('d-none')
         form.querySelector('#signInName').classList.add('form-control', 'my-2')
 
-        form.querySelector('label[for=password]').classList.add('d-none')
         form.querySelector('#password').classList.add('form-control', 'my-2')
         form.querySelector('#forgotPassword').classList.add('btn', 'btn-outline-danger', 'my-4')
 
@@ -192,11 +190,10 @@ function styleLocalSignInPage() {
 
                 const promptDiv = document.createElement('div')
                 promptDiv.id = "create-msg-div"
-                // promptDiv.classList.add('mx-2')
                 promptDiv.innerText = "Don't have an account?"
 
 
-                createAccountPrompt.innerHTML = ''
+                createAccountPrompt.innerText = ''
                 createAccountPrompt.appendChild(promptDiv)
                 if (signUpLink) {
                     createAccountPrompt.appendChild(signUpLink)
